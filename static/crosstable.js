@@ -6,7 +6,7 @@ function fill_crosstable(data){
   data.forEach(function(row){
     var str=""
     row["games"].forEach(function(g){str+=" "+g});
-    tab.row.add([ row["id"],row["fName"],row["sName"],row["numGamesPlayed"],row["points"],parseFloat(row["percent"]).toFixed(2),str])
+    tab.row.add([ row["id"],row["sName"],row["fName"],row["numGamesPlayed"],row["points"],parseFloat(row["percent"]).toFixed(2),str])
     })
 
     /*var str="<tr>"
