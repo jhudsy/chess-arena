@@ -64,14 +64,16 @@ function make_auto_match(){
 $("#white").on("change", () =>
  {
    $("#black option").removeAttr("disabled");
-   $("#black option[value='"+$("#white").val()+"']").attr("disabled","disabled");
+   if ($("#white").val()!=-1)
+     $("#black option[value='"+$("#white").val()+"']").attr("disabled","disabled");
  }
 );
 
 $("#black").on("change", () =>
  {
    $("#white option").removeAttr("disabled");
-   $("#white option[value='"+$("#black").val()+"']").attr("disabled","disabled");
+   if ($("#black").val()!=-1)
+     $("#white option[value='"+$("#black").val()+"']").attr("disabled","disabled");
  }
 );
 
