@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <div class="row">
+      <h6>Manual Pairing</h6>
+      <div class="row mb-3">
+        <div class="col-sm">
+          <label for="white">White</label>
+          <select class="form-select" id="white">
+          </select>
+        </div>
+        <div class="col-sm">
+          <label for="black">Black</label>
+          <select class="form-select" id="black">
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm">
+          <button type="button" class="btn btn-secondary" id="manual_pair">Pair</button>
+          <button type="button" class="btn btn-secondary" id="make_auto_pair">Generate Auto-Pairings</button>
+          <button type="button" class="btn btn-secondary" id="refresh_players">Refresh</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h6>Suggested Pairings</h6>
+      <div class="row">
+        <div class="col-sm">
+          <table id="suggested_pairings" class="table table-bordered">
+            <thead>
+              <tr>
+                <th>White</th>
+                <th>Black</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- these are the columns for the black and white player summaries-->
+  <div class="col-sm">
+    <div id="w_Summary" class="row">
+      <h4><span id="w_SummaryName">White Player</span></h4>
+      <ul class="list-group">
+        <li class="list-group-item">Grade: <span id="w_grade">0</span> </li>
+        <li class="list-group-item">&#35; games (graded): <span  id="w_num_games">0</span>(<span id="w_num_graded_games">0</span>)</li>
+        <li class="list-group-item">
+           w/d/l: <span id="w_num_won">0</span>/<span id="w_num_draw">0</span>/<span id="w_num_lost">0</span> </li>
+        <li class="list-group-item">
+           Performance rating: <span id="w_perf_rating">0</span>
+        </li>
+        <li class="list-group-item">
+           Club: <span id="w_club">None</span>
+        </li>
+        <li class="list-group-item">
+           Avoids: <span id="w_avoids"></span<
+        </li>
+      </ul>
+    </div>
+    <div id="b_Summary" class="row">
+      <h4><span id="b_SummaryName">Black Player</span></h4>
+      <ul class="list-group">
+        <li class="list-group-item">Grade: <span id="b_grade">0</span> </li>
+        <li class="list-group-item">&#35; games (graded): <span  id="b_num_games">0</span>(<span id="b_num_graded_games">0</span>)</li>
+        <li class="list-group-item">
+           w/d/l: <span id="b_num_won">0</span>/<span id="b_num_draw">0</span>/<span id="b_num_lost">0</span> </li>
+        <li class="list-group-item">
+           Performance rating: <span id="b_perf_rating">0</span>
+        </li>
+        <li class="list-group-item">
+           Club: <span id="b_club">None</span>
+        </li>
+        <li class="list-group-item">
+           Avoids: <span id="b_avoids"></span<
+        </li>
+      </ul>
+    </div>
+  </div>  
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+
+
+
+<div class="row">
+  <div class="col-sm">
+    <label for="weight_num_played_before">Badness of same opponent</label>
+    <input type="text" class="form-control config_setting" id="weight_num_played_before">
+    <label for="hard_avoids">Prohibit playing opponent in avoid list (1 for prohibit, 0 for allow)</label>
+    <input type="text" class="form-control config_setting" id="hard_avoids">
+    <label for="weight_in_avoid_list">Badness of playing someone in the avoid list (ignored if previous value is 1)</label>
+    <input type="text" class="form-control config_setting" id="weight_in_avoid_list">
+    <label for="weight_win_performance">Badness of pairing people with vastly differing numbers of wins</label>
+    <input type="text" class="form-control config_setting" id="weight_win_performance">
+    <label for="weight_grade_difference">Badness of pairing with vastly different grades</label>
+    <input type="text" class="form-control config_setting" id="weight_grade_difference">
+    <label for="weight_grading_needed_pairings">Importance of pairing players with no grading to those with gradings</label>
+    <input type="text" class="form-control config_setting" id="weight_grading_needed_pairings">
+    <label for="hard_avoid_club">Prohibit playing opponent in same club (1 for prohibit, 0 for allow)</label>
+    <input type="text" class="form-control config_setting" id="hard_avoid_club">
+    <label for="weight_grading_needed_pairings">Badness of playing someone in the same club (ignored if previous value is 1)</label>
+    <input type="text" class="form-control config_setting" id="weight_same_club">
+
+    <button type="button" class="btn btn-secondary" id="save_config">Save Config</button>
+  </div>
+ </div>
+<div class="row">
+  <div class="col-sm">
+
+    <label for="file_upload">Upload player CSV file. This will overwrite all data.</label>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" id="file_upload" >
+      <input type=button name="upload_button" id="upload_button_id" value="Upload">
+    </form>
+  </div>
+</div>
+</div>

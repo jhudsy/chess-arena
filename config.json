@@ -1,0 +1,10 @@
+{
+    "weight_num_played_before": -10,
+    "hard_avoids": 0,
+    "weight_in_avoid_list": -1000,
+    "weight_win_performance": -2,
+    "weight_grade_difference": -1,
+    "weight_grading_needed_pairings": 100,
+    "hard_avoid_club":0,
+    "weight_same_club":-100
+}
