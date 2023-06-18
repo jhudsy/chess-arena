@@ -191,7 +191,7 @@ def get_matchings():
         in_avoid_list= 1 if b in a.avoids else 0
 
         #do either need/does this provide a graded game
-        grading_needed_pairing = min(a.num_graded_games,b.num_graded_games) if (a.num_graded_games>=8 and b.num_graded_games<8) or (b.num_graded_games>=8 and a.num_graded_games<8) else 0
+        grading_needed_pairing = min(1+a.num_graded_games,1+b.num_graded_games) if (a.num_graded_games>=8 and b.num_graded_games<8) or (b.num_graded_games>=8 and a.num_graded_games<8) else 0
 
         #what is the win performance for the players
         #OPTIMIZED
