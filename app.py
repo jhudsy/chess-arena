@@ -43,16 +43,17 @@ def cross_table():
     player_games[p]=[]
     player_min_round_number[p]=set([])
   
-  for g in Game.query.order_by(Game.updated).all():
+  for g in Game.query.order_by(Game.updated.desc()).all():
     if g.result!=GameResult.ACTIVE:
       pw=g.white_player
       pb=g.black_player
       player_numgames_played[pw]+=1
       player_numgames_played[pb]+=1
-      round_number=max(find_min_absent(player_min_round_number[pw]),
-                       find_min_absent(player_min_round_number[pb]))
+      
+      round_number=find_min_absent(player_min_round_number[pw].union(player_min_round_number[pb]))
       player_min_round_number[pw].add(round_number)
       player_min_round_number[pb].add(round_number)
+      
       if g.result==GameResult.WHITE_WIN:
         player_points[pw]+=1
         player_games[pw].append(f"({round_number}){pb.id}w+")
@@ -79,81 +80,6 @@ def cross_table():
     row["games"]=player_games[p]
     ct.append(row)
   
-  return jsonify(ct)
-
-
-def cross_table_old():
-  """format of table is playerID playerName numGamesPlayed score percentScore [otherplayer playercolor result ] """
-  
-  ct=[]
-  player_min_round_number={}
-  for p in Player.query.all():
-    player_min_round_number[p]=set([])
-
-  for p in Player.query.all():
-    row={}
-    row["fName"]=p.fName
-    row["sName"]=p.sName
-    row["id"]=p.id
-    row["numGamesPlayed"]=len(p.games_as_white)+len(p.games_as_black)
-    points=0
-    games=[] #used for output
-    gamelist=[] #used internally
-    for g in p.games_as_white:
-      gamelist.append(g)
-    for g in p.games_as_black:
-      gamelist.append(g)
-    gamelist.sort(key= lambda x: x.updated)
-    for g in gamelist:
-      if p==g.white_player:
-        min_round_number=max(find_min_absent(player_min_round_number[p]),find_min_absent(player_min_round_number[g.black_player]))
-        player_min_round_number[p].add(min_round_number)
-        player_min_round_number[g.black_player].add(min_round_number)
-        if g.result==GameResult.WHITE_WIN:
-          games.append(f"({min_round_number}){g.black_player_id}w+")
-          points+=2
-        if g.result==GameResult.DRAW:
-          games.append(f"({min_round_number}){g.black_player_id}w=")
-          points+=1
-        if g.result==GameResult.BLACK_WIN:
-          games.append(f"({min_round_number}){g.black_player_id}w-")
-      else: #p is the black player
-        min_round_number=max(find_min_absent(player_min_round_number[p]),find_min_absent(player_min_round_number[g.white_player]))
-        player_min_round_number[p].add(min_round_number)
-        player_min_round_number[g.white_player].add(min_round_number)
-        if g.result==GameResult.BLACK_WIN:
-          games.append(f"({min_round_number}){g.white_player_id}b+")
-          points+=2
-        if g.result==GameResult.DRAW:
-          games.append(f"({min_round_number}){g.white_player_id}b=")
-          points+=1
-        if g.result==GameResult.WHITE_WIN:
-          games.append(f"({min_round_number}){g.white_player_id}b-")
-
-    #for g in p.games_as_white:
-    #   min_round_number=min(find_min_absent(player_min_round_number[p]),#find_min_absent(player_min_round_number[g.black_player]))
-    #   if g.result==GameResult.WHITE_WIN:
-    #      games.append(f"({min_round_number}){g.black_player_id}w+")
-    #      points+=2
-    #   if g.result==GameResult.DRAW:
-    #      games.append(f"({min_round_number}){g.black_player_id}w=")
-    #      points+=1
-    #   if g.result==GameResult.BLACK_WIN:
-    #      games.append(f"({min_round_number}){g.black_player_id}w-")
-    #for g in p.games_as_black:
-    #   min_round_number=min(find_min_absent(player_min_round_number[p]),#find_min_absent(player_min_round_number[g.white_player]))
-    #   if g.result==GameResult.BLACK_WIN:
-    #      games.append(f"({min_round_number}){g.white_player_id}b+")
-    #      points+=2
-    #   if g.result==GameResult.DRAW:
-    #      games.append(f"({min_round_number}){g.white_player_id}b=")
-    #      points+=1
-    #   if g.result==GameResult.WHITE_WIN:
-    #      games.append(f"({min_round_number}){g.white_player_id}b-")
-    row["points"]=points/2.0
-    row["percent"]=0.0 if row["numGamesPlayed"]==0 else row["points"]/row["numGamesPlayed"]
-    row["games"]=games
-    ct.append(row)
   return jsonify(ct)
     
 ################################################################
