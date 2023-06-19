@@ -145,10 +145,6 @@ def get_matchings():
           elif gm.result==GameResult.DRAW:
              win_performance_b+=1
 
-        #SLOW
-        #win_performance_a=2*(db.session.query((Game.white_player==a) & (Game.result==GameResult.WHITE_WIN)).count() + db.session.query((Game.black_player==a) & (Game.result==GameResult.BLACK_WIN)).count()) + (db.session.query(((Game.white_player==a) | (Game.black_player==a)) & (Game.result==GameResult.DRAW)).count())
-        #win_performance_b=2*(db.session.query((Game.white_player==b) & (Game.result==GameResult.WHITE_WIN)).count() + db.session.query((Game.black_player==b) & (Game.result==GameResult.BLACK_WIN)).count()) + (db.session.query(((Game.white_player==b) | (Game.black_player==b)) & (Game.result==GameResult.DRAW)).count())
-
         #grade difference for the two players
         grade_difference=abs(a.grade-b.grade)
 
@@ -158,7 +154,7 @@ def get_matchings():
 
         weight=num_played_before*config["weight_num_played_before"]+ in_avoid_list*config["weight_in_avoid_list"]+ grading_needed_pairing*config["weight_grading_needed_pairings"]+ abs(win_performance_a-win_performance_b)*config["weight_win_performance"]+ grade_difference*config["weight_grade_difference"]+same_club*config["weight_same_club"]
 	
-        if (in_avoid_list==0 or not config["hard_avoids"]==1) and (same_club==0 or not config["hard_avoid_club"]==1):
+        if (in_avoid_list==0 or not config["hard_avoids"]==1) and (same_club==0 or not config["hard_avoid_club"]==1) and (num_played_before==0 or not config["hard_avoid_played_before"]==1):
           g.add_edge(a,b,weight=weight)
   
   app.logger.info("finishing db")

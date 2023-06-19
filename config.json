@@ -1,4 +1,5 @@
 {
+    "hard_avoid_played_before":0,
     "weight_num_played_before": -10,
     "hard_avoids": 0,
     "weight_in_avoid_list": -1000,
