@@ -255,7 +255,6 @@ def delete_player(id): #TODO: don't forget to delete games
 def create_player():
   try:
     data=request.get_json()
-    print(data)
     p=Player()
     p.fName=data["fName"]
     p.sName=data["sName"]
@@ -310,6 +309,8 @@ def get_player_summary(id):
   p=Player.query.get(id)
   d=Player.query.get(id).as_dict()
   d["num_games"]=len(p.games_as_white)+len(p.games_as_black)
+  d["num_w"]=len(p.games_as_white)
+  d["num_b"]=len(p.games_as_black)
   num_win=0
   num_draw=0
   num_lost=0
@@ -380,12 +381,6 @@ def get_player(id):
   for gm in Game.query.filter(Game.white_player==Player.query.get(id) or Game.black_player==Player.query.get(id)).order_by(Game.updated.desc()).all():
     g.append(gm.id)
   d["games"]=g
-  #if p.club!=None:
-  #  print(f"in get, player is {p}, club is {p.club} id is {p.club.id}")
-  #  d["club_id"]=p.club.id
-  #else:
-  #  d["club_id"]=-1
-  
   
   return jsonify(d)
   #return jsonify(Player.query.get(id).as_dict())
