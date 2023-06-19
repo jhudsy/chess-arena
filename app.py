@@ -259,6 +259,7 @@ def delete_player(id): #TODO: don't forget to delete games
 def create_player():
   try:
     data=request.get_json()
+    print(data)
     p=Player()
     p.fName=data["fName"]
     p.sName=data["sName"]
@@ -268,7 +269,7 @@ def create_player():
     p.active=data["active"]
     p.club=None
     if int(data["club"])!=-1:
-      p.club=data["club"]
+      p.club=Club.query.get(data["club"])
 
     #no need to remove avoids as new player should have no avoids
     for v in data["avoids"]:
