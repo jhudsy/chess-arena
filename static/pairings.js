@@ -5,7 +5,7 @@ function get_free_players(fnc){
 
 //This function reloads the player pairs available for pairing. 
 function update_player_pairs(){
-  $("#suggested_pairings").find("tbody tr").remove();
+  //$("#suggested_pairings").find("tbody tr").remove();
   $("#white").empty().append($('<option>',{
              value: -1,
              text: ""
@@ -30,7 +30,6 @@ function update_player_pairs(){
 }
 
 function make_auto_match(){
-
   fetch("/matchings").then(resp => resp.json())
                      .then(function(data){
 
@@ -92,7 +91,7 @@ $("#manual_pair").on("click", function(){
 );
 
 $("#make_auto_pair").on("click",function(){
-make_auto_match();
+  make_auto_match();
 });
 
 $(document).on('click','.accept_pairing', function(){
@@ -115,6 +114,8 @@ $(document).on('click','.flip', function(){
   var ids=$(accept_button).attr("id").split("_");
   $(accept_button).attr("id",ids[1]+"_"+ids[0]);
   var ids=$(accept_button).attr("id").split("_");
+  update_w_summary("White Player",0,0,0,0,0,0,0,[],"None",0,0);
+  update_b_summary("Black Player",0,0,0,0,0,0,0,[],"None",0,0);
 });
 
 //functions to populate summary
@@ -195,12 +196,19 @@ function update_b_summary(name,grade,num_games,num_graded_games,num_won,num_draw
 }
 
 $(document).on("click",".player_info",function(){
-  var id=$(this).attr("href").replace('#','');
-  var tdindex=$(this).closest("td").index()
-  fetch("/player_summary/"+id).then(resp=>resp.json()).then(function(data){
-    var fnc=update_w_summary
-    if (tdindex==1)
-       fnc=update_b_summary
-    fnc(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
+  var both_ids=$(this).closest("tr").find("button").first().attr("id").split("_");
+  fetch("/player_summary/"+both_ids[0]).then(resp=>resp.json()).then(function(data){
+      update_w_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
   });
+  fetch("/player_summary/"+both_ids[1]).then(resp=>resp.json()).then(function(data){
+      update_b_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
+  });
+  //var id=$(this).attr("href").replace('#','');
+  //var tdindex=$(this).closest("td").index()
+  //fetch("/player_summary/"+id).then(resp=>resp.json()).then(function(data){
+  //  var fnc=update_w_summary
+  //  if (tdindex==1)
+  //     fnc=update_b_summary
+  //  fnc(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
+  //});
 });
