@@ -110,8 +110,11 @@ def get_matchings():
           if gm.white_player==b:
              num_played_before+=1
 
-        #SLOW
-        #num_played_before=db.session.query(((Game.white_player==a) & (Game.black_player==b)) | ((Game.white_player==b) & (Game.black_player==a))).count()
+        #number of games each player has played. This is used to increase the weight of edges of players who have played fewer games
+        num_games_a=len(a.games_as_white)+len(a.games_as_black)
+        num_games_b=len(b.games_as_white)+len(b.games_as_black)
+        fewer_games=(1/(1+min(num_games_a,num_games_b)))
+
 
         #are they in the avoid list for each other
         in_avoid_list= 1 if b in a.avoids else 0
@@ -152,7 +155,7 @@ def get_matchings():
         if a.club!=None and b.club!=None and (a.club==b.club):
           same_club=1
 
-        weight=num_played_before*config["weight_num_played_before"]+ in_avoid_list*config["weight_in_avoid_list"]+ grading_needed_pairing*config["weight_grading_needed_pairings"]+ abs(win_performance_a-win_performance_b)*config["weight_win_performance"]+ grade_difference*config["weight_grade_difference"]+same_club*config["weight_same_club"]
+        weight=num_played_before*config["weight_num_played_before"]+ in_avoid_list*config["weight_in_avoid_list"]+ grading_needed_pairing*config["weight_grading_needed_pairings"]+ abs(win_performance_a-win_performance_b)*config["weight_win_performance"]+ grade_difference*config["weight_grade_difference"]+same_club*config["weight_same_club"]+config["weight_fewer_games"]*fewer_games 
 	
         if (in_avoid_list==0 or not config["hard_avoids"]==1) and (same_club==0 or not config["hard_avoid_club"]==1) and (num_played_before==0 or not config["hard_avoid_played_before"]==1):
           g.add_edge(a,b,weight=weight)

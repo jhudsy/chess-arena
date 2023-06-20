@@ -198,10 +198,10 @@ function update_b_summary(name,grade,num_games,num_graded_games,num_won,num_draw
 $(document).on("click",".player_info",function(){
   var both_ids=$(this).closest("tr").find("button").first().attr("id").split("_");
   fetch("/player_summary/"+both_ids[0]).then(resp=>resp.json()).then(function(data){
-      update_w_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
+      update_w_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"],data["num_w"],data["num_b"]);
   });
   fetch("/player_summary/"+both_ids[1]).then(resp=>resp.json()).then(function(data){
-      update_b_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"]);
+      update_b_summary(data["fName"]+" "+data["sName"],data["grade"],data["num_games"],data["num_graded_games"],data["num_win"],data["num_draw"],data["num_lost"],data["performance_rating"],data["avoids"],data["club"],data["num_w"],data["num_b"]);
   });
   //var id=$(this).attr("href").replace('#','');
   //var tdindex=$(this).closest("td").index()

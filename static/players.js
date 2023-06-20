@@ -27,7 +27,6 @@ $("#player_dropdown").on('change', function() {
     var player_id=this.value;
     response = fetch("/player/"+player_id).then(function(response) {
        response.json().then(function(data){
-         console.log(data);
          $("#fName").val(data["fName"]);
          $("#sName").val(data["sName"]);
          $("#grade").val(data["grade"]);

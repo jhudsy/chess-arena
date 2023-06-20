@@ -7,5 +7,6 @@
     "weight_grade_difference": -1,
     "weight_grading_needed_pairings": 100,
     "hard_avoid_club":0,
-    "weight_same_club":-100
+    "weight_same_club":-100,
+    "weight_fewer_games":100
 }
